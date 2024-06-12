@@ -14,7 +14,9 @@
         "odoo.testTags": "*",
         "odoo.logLevel": "info",
         "odoo.addonsPaths": "./odoo/addons,./enterprise,${workspaceFolder:project}",
+        "odoo.templateDB": "${workspaceFolderBasename:project}",
         "odoo.templateAddons": "listdir",
+
         "python.languageServer": "None",
         "python.autoComplete.extraPaths": [
             "/home/armin/odoo/versions/XX/odoo",
@@ -34,6 +36,7 @@
         "python.analysis.exclude": [
             "/home/armin/odoo/versions",
         ],
+
         "editor.formatOnSave": false,
         "editor.rulers": [
             150
@@ -66,7 +69,7 @@
                 "type": "shell",
                 "args": [
                     "-c",
-                    "CREATE DATABASE ${config:odoo.module} TEMPLATE ${workspaceFolderBasename:project};"
+                    "CREATE DATABASE ${config:odoo.module} TEMPLATE ${config:odoo.templateDB};"
                 ],
                 "presentation": {
                     "reveal": "never",
@@ -105,7 +108,7 @@
                 "type": "shell",
                 "args": [
                     "-r",
-                    "/home/armin/.local/share/Odoo/filestore/${workspaceFolderBasename:project}",
+                    "/home/armin/.local/share/Odoo/filestore/${config:odoo.templateDB}",
                     "/home/armin/.local/share/Odoo/filestore/${config:odoo.module}",
                 ],
                 "presentation": {
@@ -193,7 +196,7 @@
                 "type": "shell",
                 "args": [
                     "-c",
-                    "DROP DATABASE IF EXISTS ${workspaceFolderBasename:project};"
+                    "DROP DATABASE IF EXISTS ${config:odoo.templateDB};"
                 ],
                 "presentation": {
                     "reveal": "never",
@@ -219,7 +222,7 @@
                 "type": "shell",
                 "args": [
                     "-c",
-                    "CREATE DATABASE ${workspaceFolderBasename:project};"
+                    "CREATE DATABASE ${config:odoo.templateDB};"
                 ],
                 "presentation": {
                     "reveal": "never",
@@ -250,7 +253,7 @@
                     "cwd": "${workspaceFolder:odoo}"
                 },
                 "args": [
-                    "--database=${workspaceFolderBasename:project}",
+                    "--database=${config:odoo.templateDB}",
                     "--init=${config:odoo.templateAddons}",
                     "--addons-path=${config:odoo.addonsPaths}",
                     "--stop-after-init",
