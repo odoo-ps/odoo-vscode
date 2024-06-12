@@ -25,13 +25,17 @@ if [ -z "$WORKSPACE_NAME" ]; then
     if [ -n "$EXISTING_WORKSPACE" ]; then
         WORKSPACE_NAME=$(basename "$EXISTING_WORKSPACE" .code-workspace)
     else
-        WORKSPACE_NAME="$ODOO_VERSION"
+        WORKSPACE_NAME="$(basename $1)"
     fi
 fi
 
 DEST_FILE="$VS_CODE_DIR/$WORKSPACE_NAME.code-workspace"
 
 cp -f "$SOURCE_FILE" "$DEST_FILE"
+
+LIST_DIR=$(find "$1" -mindepth 1 -maxdepth 1 -type d ! -name '.*' -exec basename {} \; | tr '\n' ',' | sed 's/,$//')
+
 sed -i "s/XX/$ODOO_VERSION/g" "$DEST_FILE"
+sed -i "s/listdir/$LIST_DIR/g" "$DEST_FILE"
 
 echo "Workspace file copied successfully."
