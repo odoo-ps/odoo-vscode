@@ -16,7 +16,6 @@
         "odoo.addonsPaths": "./odoo/addons,./enterprise,${workspaceFolder:project}",
         "odoo.templateDB": "${workspaceFolderBasename:project}",
         "odoo.templateAddons": "listdir",
-
         "python.languageServer": "None",
         "python.autoComplete.extraPaths": [
             "/home/armin/odoo/versions/XX/odoo",
@@ -36,10 +35,9 @@
         "python.analysis.exclude": [
             "/home/armin/odoo/versions",
         ],
-
         "editor.formatOnSave": false,
         "editor.rulers": [
-            150
+            120,
         ],
         "search.exclude": {
             "**/*.po*": true,
