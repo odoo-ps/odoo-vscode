@@ -1,0 +1,372 @@
+{
+    "folders": [
+        {
+            "path": "/home/armin/odoo/versions/XX",
+            "name": "odoo"
+        },
+        {
+            "path": "..",
+            "name": "project",
+        }
+    ],
+    "settings": {
+        "odoo.module": "MODULE_NAME",
+        "odoo.testTags": "*",
+        "odoo.logLevel": "info",
+        "odoo.addonsPaths": "./odoo/addons,./enterprise,${workspaceFolder:project}",
+        "odoo.templateAddons": "listdir",
+        "python.languageServer": "None",
+        "python.autoComplete.extraPaths": [
+            "/home/armin/odoo/versions/XX/odoo",
+            "/home/armin/odoo/versions/XX/enterprise",
+        ],
+        "python.analysis.extraPaths": [
+            "/home/armin/odoo/versions/XX/odoo",
+            "/home/armin/odoo/versions/XX/enterprise",
+        ],
+        "python.defaultInterpreterPath": "/home/armin/odoo/venv/XX/bin/python",
+        "python.analysis.packageIndexDepths": [
+            {
+                "name": "odoo",
+                "depth": 2
+            }
+        ],
+        "python.analysis.exclude": [
+            "/home/armin/odoo/versions",
+        ],
+        "editor.formatOnSave": false,
+        "editor.rulers": [
+            150
+        ],
+        "search.exclude": {
+            "**/*.po*": true,
+            "**/LICENSE": true,
+            "**/README.md": true,
+        },
+    },
+    "tasks": {
+        "version": "2.0.0",
+        "tasks": [
+            {
+                "label": "drop db",
+                "command": "psql",
+                "type": "shell",
+                "args": [
+                    "-c",
+                    "DROP DATABASE IF EXISTS ${config:odoo.module};"
+                ],
+                "presentation": {
+                    "reveal": "never",
+                    "close": true,
+                }
+            },
+            {
+                "label": "create db from template",
+                "command": "psql",
+                "type": "shell",
+                "args": [
+                    "-c",
+                    "CREATE DATABASE ${config:odoo.module} TEMPLATE ${workspaceFolderBasename:project};"
+                ],
+                "presentation": {
+                    "reveal": "never",
+                    "close": true
+                },
+            },
+            {
+                "label": "create db",
+                "command": "psql",
+                "type": "shell",
+                "args": [
+                    "-c",
+                    "CREATE DATABASE ${config:odoo.module}"
+                ],
+                "presentation": {
+                    "reveal": "never",
+                    "close": true
+                },
+            },
+            {
+                "label": "remove filestore",
+                "command": "rm",
+                "type": "shell",
+                "args": [
+                    "-rf",
+                    "/home/armin/.local/share/Odoo/filestore/${config:odoo.module}",
+                ],
+                "presentation": {
+                    "reveal": "never",
+                    "close": true
+                },
+            },
+            {
+                "label": "copy filestore",
+                "command": "cp",
+                "type": "shell",
+                "args": [
+                    "-r",
+                    "/home/armin/.local/share/Odoo/filestore/${workspaceFolderBasename:project}",
+                    "/home/armin/.local/share/Odoo/filestore/${config:odoo.module}",
+                ],
+                "presentation": {
+                    "reveal": "never",
+                    "close": true
+                },
+            },
+            {
+                "label": "~Init DB",
+                "command": "./odoo/odoo-bin",
+                "type": "shell",
+                "options": {
+                    "cwd": "${workspaceFolder:odoo}"
+                },
+                "args": [
+                    "--database=${config:odoo.module}",
+                    "--init=${config:odoo.module}",
+                    "--addons-path=${config:odoo.addonsPaths}",
+                    "--stop-after-init",
+                    "--max-cron-threads=1",
+                ],
+                "dependsOn": [
+                    "drop db",
+                    "create db from template",
+                    "remove filestore",
+                    "copy filestore",
+                ],
+                "dependsOrder": "sequence",
+            },
+            {
+                "label": "~Init DB Without Template",
+                "command": "./odoo/odoo-bin",
+                "type": "shell",
+                "options": {
+                    "cwd": "${workspaceFolder:odoo}"
+                },
+                "args": [
+                    "--database=${config:odoo.module}",
+                    "--init=${config:odoo.module}",
+                    "--addons-path=${config:odoo.addonsPaths}",
+                    "--stop-after-init",
+                    "--max-cron-threads=1",
+                ],
+                "dependsOn": [
+                    "drop db",
+                    "create db",
+                    "remove filestore",
+                ],
+                "dependsOrder": "sequence",
+            },
+            {
+                "label": "switch to production",
+                "command": "git",
+                "type": "shell",
+                "options": {
+                    "cwd": "${workspaceFolder:project}"
+                },
+                "args": [
+                    "switch",
+                    "main"
+                ],
+                "presentation": {
+                    "reveal": "never",
+                    "close": true
+                }
+            },
+            {
+                "label": "pull",
+                "command": "git",
+                "type": "shell",
+                "options": {
+                    "cwd": "${workspaceFolder:project}"
+                },
+                "args": [
+                    "pull"
+                ],
+                "presentation": {
+                    "reveal": "never",
+                    "close": true
+                }
+            },
+            {
+                "label": "drop template db",
+                "command": "psql",
+                "type": "shell",
+                "args": [
+                    "-c",
+                    "DROP DATABASE IF EXISTS ${workspaceFolderBasename:project};"
+                ],
+                "presentation": {
+                    "reveal": "never",
+                    "close": true
+                }
+            },
+            {
+                "label": "remove template filestore",
+                "command": "rm",
+                "type": "shell",
+                "args": [
+                    "-rf",
+                    "/home/armin/.local/share/Odoo/filestore/${config:odoo.module}",
+                ],
+                "presentation": {
+                    "reveal": "never",
+                    "close": true
+                },
+            },
+            {
+                "label": "create template db",
+                "command": "psql",
+                "type": "shell",
+                "args": [
+                    "-c",
+                    "CREATE DATABASE ${workspaceFolderBasename:project};"
+                ],
+                "presentation": {
+                    "reveal": "never",
+                    "close": true
+                }
+            },
+            {
+                "label": "switch back to previous branch",
+                "command": "git",
+                "type": "shell",
+                "options": {
+                    "cwd": "${workspaceFolder:project}"
+                },
+                "args": [
+                    "checkout",
+                    "-"
+                ],
+                "presentation": {
+                    "reveal": "never",
+                    "close": true
+                }
+            },
+            {
+                "label": "~Init Template DB",
+                "command": "./odoo/odoo-bin",
+                "type": "shell",
+                "options": {
+                    "cwd": "${workspaceFolder:odoo}"
+                },
+                "args": [
+                    "--database=${workspaceFolderBasename:project}",
+                    "--init=${config:odoo.templateAddons}",
+                    "--addons-path=${config:odoo.addonsPaths}",
+                    "--stop-after-init",
+                    "--max-cron-threads=1",
+                ],
+                "dependsOn": [
+                    "switch to production",
+                    "pull",
+                    "drop template db",
+                    "remove template filestore",
+                    "create template db",
+                    "switch back to previous branch",
+                ],
+                "dependsOrder": "sequence",
+            },
+            {
+                "label": "copy precommit",
+                "command": "copier",
+                "type": "shell",
+                "options": {
+                    "cwd": "${workspaceFolder:project}"
+                },
+                "args": [
+                    "copy",
+                    "--trust",
+                    "--vcs-ref=2.0.0",
+                    "git@github.com:odoo-ps/psbe-ps-tech-tools.git",
+                    ".",
+                ],
+            },
+            {
+                "label": "~Install Pre-Commit",
+                "command": "pre-commit",
+                "type": "shell",
+                "options": {
+                    "cwd": "${workspaceFolder:project}"
+                },
+                "args": [
+                    "install",
+                ],
+                "dependsOn": [
+                    "copy precommit",
+                    "~Run Pre-Commit",
+                ],
+                "dependsOrder": "sequence",
+            },
+            {
+                "label": "~Run Pre-Commit",
+                "command": "pre-commit",
+                "type": "shell",
+                "options": {
+                    "cwd": "${workspaceFolder:project}"
+                },
+                "args": [
+                    "run",
+                    "--all-files",
+                ],
+            },
+        ]
+    },
+    "launch": {
+        "configurations": [
+            {
+                "name": "Run",
+                "type": "debugpy",
+                "request": "launch",
+                "console": "integratedTerminal",
+                "program": "./odoo/odoo-bin",
+                "cwd": "${workspaceFolder:odoo}",
+                "args": [
+                    "--dev=xml",
+                    "--database=${config:odoo.module}",
+                    "--update=${config:odoo.module}",
+                    "--addons-path=${config:odoo.addonsPaths}",
+                    "--log-level=${config:odoo.logLevel}",
+                    "--limit-time-cpu=0",
+                    "--limit-time-real=0",
+                    "--max-cron-threads=1",
+                ]
+            },
+            {
+                "name": "Test",
+                "type": "debugpy",
+                "request": "launch",
+                "console": "integratedTerminal",
+                "program": "./odoo/odoo-bin",
+                "cwd": "${workspaceFolder:odoo}",
+                "args": [
+                    "--test-enable",
+                    "--test-tags=${config:odoo.testTags}",
+                    "--database=${config:odoo.module}",
+                    "--addons-path=${config:odoo.addonsPaths}",
+                    "--log-level=${config:odoo.logLevel}",
+                    "--limit-time-cpu=0",
+                    "--limit-time-real=0",
+                    "--stop-after-init",
+                    "--max-cron-threads=1",
+                ]
+            },
+            {
+                "name": "Shell",
+                "type": "debugpy",
+                "request": "launch",
+                "console": "integratedTerminal",
+                "program": "./odoo/odoo-bin",
+                "cwd": "${workspaceFolder:odoo}",
+                "args": [
+                    "shell",
+                    "--database=${config:odoo.module}",
+                    "--update=${config:odoo.module}",
+                    "--addons-path=${config:odoo.addonsPaths}",
+                    "--limit-time-cpu=0",
+                    "--limit-time-real=0",
+                    "--max-cron-threads=1",
+                ]
+            },
+        ]
+    },
+}
