@@ -310,6 +310,22 @@
                     "--all-files",
                 ],
             },
+            {
+                "label": "update module",
+                "command": "./odoo/odoo-bin",
+                "type": "shell",
+                "options": {
+                    "cwd": "${workspaceFolder:odoo}"
+                },
+                "args": [
+                    "--database=${config:odoo.module}",
+                    "--update=${config:odoo.module}",
+                    "--addons-path=${config:odoo.addonsPaths}",
+                    "--log-level=${config:odoo.logLevel}",
+                    "--stop-after-init",
+                    "--max-cron-threads=1",
+                ],
+            },
         ]
     },
     "launch": {
@@ -339,6 +355,7 @@
                 "console": "integratedTerminal",
                 "program": "./odoo/odoo-bin",
                 "cwd": "${workspaceFolder:odoo}",
+                "preLaunchTask": "update module",
                 "args": [
                     "--test-enable",
                     "--test-tags=${config:odoo.testTags}",
