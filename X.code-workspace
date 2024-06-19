@@ -44,6 +44,7 @@
             "**/LICENSE": true,
             "**/README.md": true,
         },
+        "terminal.integrated.cwd": "${workspaceFolder:project}",
     },
     "tasks": {
         "version": "2.0.0",
@@ -118,9 +119,6 @@
                 "label": "~Init DB",
                 "command": "./odoo/odoo-bin",
                 "type": "shell",
-                "options": {
-                    "cwd": "${workspaceFolder:odoo}"
-                },
                 "args": [
                     "--database=${config:odoo.module}",
                     "--init=${config:odoo.module}",
@@ -140,9 +138,6 @@
                 "label": "~Init DB Without Template",
                 "command": "./odoo/odoo-bin",
                 "type": "shell",
-                "options": {
-                    "cwd": "${workspaceFolder:odoo}"
-                },
                 "args": [
                     "--database=${config:odoo.module}",
                     "--init=${config:odoo.module}",
@@ -247,9 +242,6 @@
                 "label": "~Init Template DB",
                 "command": "./odoo/odoo-bin",
                 "type": "shell",
-                "options": {
-                    "cwd": "${workspaceFolder:odoo}"
-                },
                 "args": [
                     "--database=${config:odoo.templateDB}",
                     "--init=${config:odoo.templateAddons}",
@@ -283,6 +275,36 @@
                 ],
             },
             {
+                "label": "~Init Pre-Commit",
+                "command": "pre-commit",
+                "type": "shell",
+                "options": {
+                    "cwd": "${workspaceFolder:project}"
+                },
+                "args": [
+                    "run",
+                    "--all-files",
+                ],
+                "dependsOn": [
+                    "copy precommit",
+                    "~Install Pre-Commit",
+                ],
+                "dependsOrder": "sequence",
+            },
+            {
+                "label": "pip install pre-commit",
+                "command": "pip",
+                "type": "shell",
+                "options": {
+                    "cwd": "${workspaceFolder:project}"
+                },
+                "args": [
+                    "install",
+                    "pre-commit",
+                ],
+                "dependsOrder": "sequence",
+            },
+            {
                 "label": "~Install Pre-Commit",
                 "command": "pre-commit",
                 "type": "shell",
@@ -293,10 +315,8 @@
                     "install",
                 ],
                 "dependsOn": [
-                    "copy precommit",
-                    "~Run Pre-Commit",
-                ],
-                "dependsOrder": "sequence",
+                    "pip install pre-commit"
+                ]
             },
             {
                 "label": "~Run Pre-Commit",
@@ -314,9 +334,6 @@
                 "label": "update module",
                 "command": "./odoo/odoo-bin",
                 "type": "shell",
-                "options": {
-                    "cwd": "${workspaceFolder:odoo}"
-                },
                 "args": [
                     "--database=${config:odoo.module}",
                     "--update=${config:odoo.module}",
