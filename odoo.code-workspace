@@ -101,7 +101,7 @@
                 "type": "shell",
                 "args": [
                     "-rf",
-                    "/home/armin/.local/share/Odoo/filestore/${config:odoo.module}",
+                    "~/.local/share/Odoo/filestore/${config:odoo.module}",
                 ],
                 "presentation": {
                     "reveal": "never",
@@ -114,8 +114,8 @@
                 "type": "shell",
                 "args": [
                     "-r",
-                    "/home/armin/.local/share/Odoo/filestore/${config:odoo.templateDB}",
-                    "/home/armin/.local/share/Odoo/filestore/${config:odoo.module}",
+                    "~/.local/share/Odoo/filestore/${config:odoo.templateDB}",
+                    "~/.local/share/Odoo/filestore/${config:odoo.module}",
                 ],
                 "presentation": {
                     "reveal": "never",
@@ -211,7 +211,7 @@
                 "type": "shell",
                 "args": [
                     "-rf",
-                    "/home/armin/.local/share/Odoo/filestore/${config:odoo.module}",
+                    "~/.local/share/Odoo/filestore/${config:odoo.module}",
                 ],
                 "presentation": {
                     "reveal": "never",
@@ -234,20 +234,6 @@
                 }
             },
             {
-                "label": "switch back to previous branch",
-                "command": "",
-                "type": "shell",
-                "options": {
-                    "cwd": "${workspaceFolder:project}"
-                },
-                "args": [
-                ],
-                "presentation": {
-                    "reveal": "never",
-                    "close": true
-                }
-            },
-            {
                 "label": "init modules",
                 "command": "./odoo/odoo-bin",
                 "type": "shell",
@@ -263,6 +249,9 @@
                 "label": "~Init Template DB",
                 "command": "git",
                 "type": "shell",
+                "options": {
+                    "cwd": "${workspaceFolder:project}"
+                },
                 "args": [
                     "checkout",
                     "-"
