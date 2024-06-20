@@ -13,7 +13,7 @@ VS_CODE_DIR="$DEST_DIR/.vscode"
 mkdir -p "$VS_CODE_DIR"
 
 SCRIPT_DIR="$(dirname "$0")"
-SOURCE_FILE="$SCRIPT_DIR/X.code-workspace"
+SOURCE_FILE="$SCRIPT_DIR/odoo.code-workspace"
 
 if [ ! -f "$SOURCE_FILE" ]; then
     echo "Source file $SOURCE_FILE does not exist."
@@ -35,7 +35,7 @@ cp -f "$SOURCE_FILE" "$DEST_FILE"
 
 LIST_DIR=$(find "$1" -mindepth 1 -maxdepth 1 -type d ! -name '.*' -exec basename {} \; | tr '\n' ',' | sed 's/,$//')
 
-sed -i "s/XX/$ODOO_VERSION/g" "$DEST_FILE"
-sed -i "s/listdir/$LIST_DIR/g" "$DEST_FILE"
+sed -i "s/ODOO_VERSION/$ODOO_VERSION/g" "$DEST_FILE"
+sed -i "s/TEMPLATE_MODULES/$LIST_DIR/g" "$DEST_FILE"
 
 echo "Workspace file copied successfully."

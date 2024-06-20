@@ -1,7 +1,7 @@
 {
     "folders": [
         {
-            "path": "/home/armin/odoo/versions/XX",
+            "path": "../../../versions/ODOO_VERSION",
             "name": "odoo"
         },
         {
@@ -15,17 +15,17 @@
         "odoo.logLevel": "info",
         "odoo.addonsPaths": "./odoo/addons,./enterprise,${workspaceFolder:project}",
         "odoo.templateDB": "${workspaceFolderBasename:project}",
-        "odoo.templateAddons": "listdir",
+        "odoo.templateAddons": "TEMPLATE_MODULES",
         "python.languageServer": "None",
         "python.autoComplete.extraPaths": [
-            "/home/armin/odoo/versions/XX/odoo",
-            "/home/armin/odoo/versions/XX/enterprise",
+            "../../../versions/ODOO_VERSION/odoo",
+            "../../../versions/ODOO_VERSION/enterprise",
         ],
         "python.analysis.extraPaths": [
-            "/home/armin/odoo/versions/XX/odoo",
-            "/home/armin/odoo/versions/XX/enterprise",
+            "../../../versions/ODOO_VERSION/odoo",
+            "../../../versions/ODOO_VERSION/enterprise",
         ],
-        "python.defaultInterpreterPath": "/home/armin/odoo/venv/XX/bin/python",
+        "python.defaultInterpreterPath": "../../../venv/ODOO_VERSION/bin/python",
         "python.analysis.packageIndexDepths": [
             {
                 "name": "odoo",
@@ -33,7 +33,7 @@
             }
         ],
         "python.analysis.exclude": [
-            "/home/armin/odoo/versions",
+            "../../../versions",
         ],
         "editor.formatOnSave": false,
         "editor.rulers": [
@@ -54,6 +54,8 @@
                 "command": "psql",
                 "type": "shell",
                 "args": [
+                    "-d",
+                    "postgres",
                     "-c",
                     "DROP DATABASE IF EXISTS ${config:odoo.module};"
                 ],
@@ -67,6 +69,8 @@
                 "command": "psql",
                 "type": "shell",
                 "args": [
+                    "-d",
+                    "postgres",
                     "-c",
                     "CREATE DATABASE ${config:odoo.module} TEMPLATE ${config:odoo.templateDB};"
                 ],
@@ -80,6 +84,8 @@
                 "command": "psql",
                 "type": "shell",
                 "args": [
+                    "-d",
+                    "postgres",
                     "-c",
                     "CREATE DATABASE ${config:odoo.module}"
                 ],
@@ -188,6 +194,8 @@
                 "command": "psql",
                 "type": "shell",
                 "args": [
+                    "-d",
+                    "postgres",
                     "-c",
                     "DROP DATABASE IF EXISTS ${config:odoo.templateDB};"
                 ],
@@ -214,6 +222,8 @@
                 "command": "psql",
                 "type": "shell",
                 "args": [
+                    "-d",
+                    "postgres",
                     "-c",
                     "CREATE DATABASE ${config:odoo.templateDB};"
                 ],
