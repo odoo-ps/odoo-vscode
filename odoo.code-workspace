@@ -19,14 +19,14 @@
         "odoo.templateBranch": "main",
         "python.languageServer": "None",
         "python.autoComplete.extraPaths": [
-            "../../../versions/ODOO_VERSION/odoo",
-            "../../../versions/ODOO_VERSION/enterprise",
+            "../../versions/ODOO_VERSION/odoo",
+            "../../versions/ODOO_VERSION/enterprise",
         ],
         "python.analysis.extraPaths": [
-            "../../../versions/ODOO_VERSION/odoo",
-            "../../../versions/ODOO_VERSION/enterprise",
+            "../../versions/ODOO_VERSION/odoo",
+            "../../versions/ODOO_VERSION/enterprise",
         ],
-        "python.defaultInterpreterPath": "../../../venv/ODOO_VERSION/bin/python",
+        "python.defaultInterpreterPath": "../../venv/ODOO_VERSION/bin/python",
         "python.analysis.packageIndexDepths": [
             {
                 "name": "odoo",
@@ -34,7 +34,7 @@
             }
         ],
         "python.analysis.exclude": [
-            "../../../versions",
+            "../../versions",
         ],
         "editor.formatOnSave": false,
         "editor.rulers": [
