@@ -16,6 +16,7 @@
         "odoo.addonsPaths": "./odoo/addons,./enterprise,${workspaceFolder:project}",
         "odoo.templateDB": "${workspaceFolderBasename:project}",
         "odoo.templateAddons": "TEMPLATE_MODULES",
+        "odoo.templateBranch": "main",
         "python.languageServer": "None",
         "python.autoComplete.extraPaths": [
             "../../../versions/ODOO_VERSION/odoo",
@@ -167,7 +168,7 @@
                 },
                 "args": [
                     "switch",
-                    "main"
+                    "${config:odoo.module}"
                 ],
                 "presentation": {
                     "reveal": "never",
@@ -234,14 +235,12 @@
             },
             {
                 "label": "switch back to previous branch",
-                "command": "git",
+                "command": "",
                 "type": "shell",
                 "options": {
                     "cwd": "${workspaceFolder:project}"
                 },
                 "args": [
-                    "checkout",
-                    "-"
                 ],
                 "presentation": {
                     "reveal": "never",
@@ -249,7 +248,7 @@
                 }
             },
             {
-                "label": "~Init Template DB",
+                "label": "init modules",
                 "command": "./odoo/odoo-bin",
                 "type": "shell",
                 "args": [
@@ -259,13 +258,22 @@
                     "--stop-after-init",
                     "--max-cron-threads=1",
                 ],
+            },
+            {
+                "label": "~Init Template DB",
+                "command": "git",
+                "type": "shell",
+                "args": [
+                    "checkout",
+                    "-"
+                ],
                 "dependsOn": [
                     "switch to production",
                     "pull",
                     "drop template db",
                     "remove template filestore",
                     "create template db",
-                    "switch back to previous branch",
+                    "init modules",
                 ],
                 "dependsOrder": "sequence",
             },
