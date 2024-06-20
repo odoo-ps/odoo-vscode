@@ -168,7 +168,7 @@
                 },
                 "args": [
                     "switch",
-                    "${config:odoo.module}"
+                    "${config:odoo.templateBranch}"
                 ],
                 "presentation": {
                     "reveal": "never",
