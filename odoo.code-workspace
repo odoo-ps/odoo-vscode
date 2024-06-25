@@ -123,7 +123,7 @@
                 },
             },
             {
-                "label": "~Init DB",
+                "label": "~Init DB From Template",
                 "command": "./odoo/odoo-bin",
                 "type": "shell",
                 "args": [
@@ -142,7 +142,7 @@
                 "dependsOrder": "sequence",
             },
             {
-                "label": "~Init DB Without Template",
+                "label": "~Init DB",
                 "command": "./odoo/odoo-bin",
                 "type": "shell",
                 "args": [
