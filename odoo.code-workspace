@@ -81,21 +81,6 @@
                 },
             },
             {
-                "label": "create db",
-                "command": "psql",
-                "type": "shell",
-                "args": [
-                    "-d",
-                    "postgres",
-                    "-c",
-                    "CREATE DATABASE ${config:odoo.module}"
-                ],
-                "presentation": {
-                    "reveal": "never",
-                    "close": true
-                },
-            },
-            {
                 "label": "remove filestore",
                 "command": "rm",
                 "type": "shell",
@@ -154,7 +139,6 @@
                 ],
                 "dependsOn": [
                     "drop db",
-                    "create db",
                     "remove filestore",
                 ],
                 "dependsOrder": "sequence",
@@ -219,21 +203,6 @@
                 },
             },
             {
-                "label": "create template db",
-                "command": "psql",
-                "type": "shell",
-                "args": [
-                    "-d",
-                    "postgres",
-                    "-c",
-                    "CREATE DATABASE ${config:odoo.templateDB};"
-                ],
-                "presentation": {
-                    "reveal": "never",
-                    "close": true
-                }
-            },
-            {
                 "label": "init modules",
                 "command": "./odoo/odoo-bin",
                 "type": "shell",
@@ -261,7 +230,6 @@
                     "pull",
                     "drop template db",
                     "remove template filestore",
-                    "create template db",
                     "init modules",
                 ],
                 "dependsOrder": "sequence",
